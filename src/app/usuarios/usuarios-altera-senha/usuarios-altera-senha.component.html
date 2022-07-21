@@ -1,0 +1,66 @@
+<div class="container">
+  <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+
+    <div class="ui-g">
+
+      <div class="ui-g-12">
+        <h1>Alterar Senha</h1>
+      </div>
+
+      <div class="ui-g-6 ui-sm-12">
+
+
+          <div class="ui-g-12 ui-sm-12 ui-fluid">
+            <label>E-mail</label>
+            <input pInputText type="text" ngModel name="email"
+            #email="ngModel" disabled [(ngModel)]="requisicao.email">
+          </div>
+
+          <div class="ui-g-12 ui-sm-12 ui-fluid">
+            <label>Senha atual</label>
+            <input pPassword type="password" #senhaAtual="ngModel"
+            [(ngModel)]="requisicao.senhaAtual" name="senhaAtual"
+            promptLabel="Digite a senha atual" weakLabel="Fraca" mediumLabel="Media"
+            strongLabel="Forte" required>
+
+            <app-message-validacao [control]="senhaAtual" error="required"
+            text="Informe a senha atual"></app-message-validacao>
+
+          </div>
+
+          <div class="ui-g-12 ui-sm-12 ui-fluid">
+            <label>Nova senha</label>
+            <input pPassword type="password" name="novaSenha" [(ngModel)]="requisicao.novaSenha"
+            promptLabel="Digite a nova senha" weakLabel="Fraca" mediumLabel="Media"
+            strongLabel="Forte" #novaSenha="ngModel" required minlength="7">
+
+            <app-message-validacao [control]="novaSenha" error="required"
+            text="Informe a nova senha"></app-message-validacao>
+
+            <app-message-validacao [control]="novaSenha" error="minlength"
+              text=" Mínimo de {{ novaSenha.errors?.minlength?.requiredLength }} caracteres">
+            </app-message-validacao>
+          </div>
+
+          <div class="ui-g-12 ui-sm-12 ui-fluid">
+            <label>Confirmar nova senha</label>
+            <input pPassword type="password" name="confirmaNovaSenha" [(ngModel)]="confsenha"
+            promptLabel="Digite novamente a nova senha" weakLabel="Fraca" mediumLabel="Media"
+            strongLabel="Forte" #confirmaNovaSenha="ngModel" required minlength="7">
+
+            <app-message-validacao [control]="confirmaNovaSenha" error="required"
+            text="Informe a confirmação da nova senha"></app-message-validacao>
+
+            <app-message-validacao [control]="confirmaNovaSenha" error="minlength"
+              text=" Mínimo de {{ confirmaNovaSenha.errors?.minlength?.requiredLength }} caracteres">
+            </app-message-validacao>
+          </div>
+
+          <div class="ui-g-12">
+            <button pButton type="submit" label="Confirmar" [disabled]="form.invalid"></button>
+          </div>
+      </div>
+    </div>
+
+  </form>
+</div>

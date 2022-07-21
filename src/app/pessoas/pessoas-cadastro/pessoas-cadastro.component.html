@@ -1,0 +1,292 @@
+<div class="container">
+    <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+      <div class="ui-g">
+
+        <div class="ui-g-12">
+          <h1>{{editando ? 'Edição de ':'Nova'}} Pessoa</h1>
+        </div>
+
+        <div class="ui-g-12" *ngIf="!pessoa.codigo">
+          <p-panel header="Tipo Cadastro">
+            <div class="ui-g">
+              <div class="ui-g-3  ui-sm-6">
+                <p-radioButton name="tipo" value="false"
+                  label="ENCONTREIRO" (click)="configurarEncontreiro()" required>
+                </p-radioButton >
+              </div>
+              <div class="ui-g-3  ui-sm-6">
+                <p-radioButton name="tipo" value="true"
+                  label="ENCONTRISTA" (click)="configurarEncontrista()" required>
+                </p-radioButton>
+              </div>
+            </div>
+          </p-panel>
+        </div>
+
+        <div class="ui-g-12">
+          <p-panel header="Informações Pessoais">
+            <div class="ui-g">
+
+              <div class="ui-g-8 ui-sm-12 ui-fluid">
+                <label>Nome</label>
+                <input pInputText type="text" ngModel name="nomeCompleto"
+                #nomeCompleto="ngModel" required minlength="5" [(ngModel)]="pessoa.nome">
+
+                <app-message-validacao [control]="nomeCompleto" error="required"
+                  text="Informe o nome"></app-message-validacao>
+
+                <app-message-validacao [control]="nomeCompleto" error="minlength"
+                  text=" Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres">
+                </app-message-validacao>
+
+
+              </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                  <label>Nome Guerra</label>
+                  <input pInputText type="text" ngModel name="nomeGuerra"
+                    #nomeGuerra="ngModel" required [(ngModel)]="pessoa.nomeGuerra">
+
+                    <app-message-validacao [control]="nomeGuerra" error="required"
+                    text="Informe o nome de guerra"></app-message-validacao>
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                  <label>Data Nascimento</label>
+                  <p-calendar dateFormat="dd/m/yy" ngModel name="dataNasc"
+                    #dataNasc="ngModel" required
+                    [(ngModel)]="pessoa.dataNasc"></p-calendar>
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                  <label>Sexo</label>
+                  <div class="ui-g">
+                    <div class="ui-g-6">
+                      <p-radioButton name="sexo" value="MASCULINO" #sexo="ngModel"
+                      label="Masculino" [(ngModel)]="pessoa.sexo"></p-radioButton>
+                    </div>
+                    <div class="ui-g-6">
+                      <p-radioButton name="sexo" value="FEMININO"  #sexo="ngModel"
+                      label="Feminino" [(ngModel)]="pessoa.sexo"></p-radioButton>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                  <label>Estado Civil</label>
+                  <div class="ui-g">
+                    <div class="ui-g-6">
+                      <p-radioButton name="estadoCivil" value="SOLTEIRO"  #estadoCivil="ngModel"
+                      label="Solteiro(a)" [(ngModel)]="pessoa.estadoCivil"></p-radioButton>
+                    </div>
+                    <div class="ui-g-6">
+                      <p-radioButton name="estadoCivil" value="CASADO" #estadoCivil="ngModel"
+                      label="Casado(a)" [(ngModel)]="pessoa.estadoCivil"></p-radioButton>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="ui-g-8 ui-sm-12 ui-fluid">
+                  <label>E-mail</label>
+                  <input pInputText type="text" ngModel name="email"
+                    #nome="ngModel" [(ngModel)]="pessoa.email">
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                  <label>Telefone</label>
+                  <p-inputMask mask="(99) 99999-9999" ngModel name="telefone"
+                    #telefone="ngModel" required [(ngModel)]="pessoa.telefone">
+                  </p-inputMask>
+
+                  <app-message-validacao [control]="telefone" error="required"
+                    text="Informe o telefone"></app-message-validacao>
+                </div>
+
+                <div class="ui-g-8 ui-sm-12 ui-fluid">
+                    <label>Logradouro</label>
+                    <input pInputText type="text" ngModel name="logradouro"
+                      #logradouro="ngModel" required [(ngModel)]="pessoa.endereco.logradouro">
+
+                    <app-message-validacao [control]="logradouro" error="required"
+                      text="Informe o logradouro"></app-message-validacao>
+
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                    <label>Número</label>
+                    <input pInputText type="text" ngModel name="numero"
+                      #numero="ngModel" required [(ngModel)]="pessoa.endereco.numero">
+
+                    <app-message-validacao [control]="numero" error="required"
+                      text="Informe o numero"></app-message-validacao>
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                    <label>Complemento</label>
+                    <input pInputText type="text" [(ngModel)]="pessoa.endereco.complemento"
+                      name="complemento">
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                  <label>Bairro</label>
+                  <input pInputText type="text" ngModel name="bairro"
+                    #bairro="ngModel" required [(ngModel)]="pessoa.endereco.bairro">
+
+                  <app-message-validacao [control]="bairro" error="required"
+                    text="Informe o bairro"></app-message-validacao>
+
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                    <label>CEP</label>
+                    <p-inputMask mask="99.999-999" ngModel name="cep"
+                      #cep="ngModel" [(ngModel)]="pessoa.endereco.cep"></p-inputMask>
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                    <label>Estado</label>
+
+                    <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+                      [filter]="true" [options]="estados" required
+                      (onChange)="selecionarEstado()"
+                      [(ngModel)]="estadoSelecionado"
+                      #estado="ngModel" name="estado"></p-dropdown>
+
+                    <app-message-validacao [control]="estado" error="required"
+                      text="Informe o estado"></app-message-validacao>
+
+                </div>
+
+                <div class="ui-g-4 ui-sm-12 ui-fluid">
+                    <label>Cidade</label>
+
+                    <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+                      [filter]="true" [options]="cidades" required
+                      [(ngModel)]="pessoa.endereco.cidade.codigo"
+                      #cidade="ngModel" name="cidade" [disabled]="!estadoSelecionado"></p-dropdown>
+
+                    <app-message-validacao [control]="cidade" error="required"
+                      text="Informe a cidade"></app-message-validacao>
+                </div>
+              </div>
+            </p-panel>
+          </div>
+
+        <div class="ui-g-12">
+            <p-panel header="Dados Complementares">
+              <app-pessoas-dados-complementares [dadosComplementares]="pessoa.dadosComplementares"></app-pessoas-dados-complementares>
+            </p-panel>
+        </div>
+
+        <div class="ui-g-12" *ngIf="!encontrista">
+            <p-panel header="Historicos">
+              <app-pessoas-cadastro-historico [historicos]="pessoa.historicos"></app-pessoas-cadastro-historico>
+            </p-panel>
+        </div>
+
+        <div class="ui-g-12" *ngIf="!encontrista">
+          <p-panel header="Responsabilidade">
+              <div class="ui-g">
+                <div class="ui-g-3  ui-sm-6">
+                    <label>Coordenador</label>
+                    <p-checkbox name="coordenador" binary="true"
+                    [(ngModel)]="coordenador"></p-checkbox>
+                </div>
+                <div class="ui-g-3  ui-sm-6">
+                    <label>EDG</label>
+                    <p-checkbox name="edg" binary="true"
+                    [(ngModel)]="edg"></p-checkbox>
+                </div>
+                <div class="ui-g-3  ui-sm-6">
+                    <label>Dirigente Circulo</label>
+                    <p-checkbox name="dirigente" binary="true"
+                    [(ngModel)]="dirigente"></p-checkbox>
+                </div>
+              </div>
+          </p-panel>
+        </div>
+
+        <div class="ui-g-12" *ngIf="encontrista">
+            <p-panel header="Filiação">
+              <div class="ui-g">
+                  <div class="ui-g-8 ui-sm-12 ui-fluid">
+                    <label>Nome Pai</label>
+                    <input pInputText type="text" ngModel name="pai"
+                      #pai="ngModel" required [(ngModel)]="pessoa.filiacao.pai">
+
+                    <app-message-validacao [control]="pai" error="required"
+                      text="Informe o nome do pai"></app-message-validacao>
+                  </div>
+                  <div class="ui-g-4 ui-sm-12 ui-fluid">
+                    <label>Telefone</label>
+                    <p-inputMask mask="(99) 99999-9999" ngModel name="telefonePai"
+                      #telefonePai="ngModel" [(ngModel)]="pessoa.filiacao.telefonePai">
+                    </p-inputMask>
+                  </div>
+                  <div class="ui-g-8 ui-sm-12 ui-fluid">
+                    <label>Nome Mãe</label>
+                    <input pInputText type="text" ngModel name="mae"
+                      #mae="ngModel" required [(ngModel)]="pessoa.filiacao.mae">
+
+                    <app-message-validacao [control]="mae" error="required"
+                      text="Informe o nome da mãe"></app-message-validacao>
+                  </div>
+                  <div class="ui-g-4 ui-sm-12 ui-fluid">
+                    <label>Telefone</label>
+                    <p-inputMask mask="(99) 99999-9999" ngModel name="telefoneMae"
+                      #telefoneMae="ngModel" [(ngModel)]="pessoa.filiacao.telefoneMae">
+                    </p-inputMask>
+                  </div>
+              </div>
+            </p-panel>
+        </div>
+
+        <div class="ui-g-12" *ngIf="encontrista">
+            <p-panel header="Padrinho / Madrinha">
+              <div class="ui-g">
+                  <div class="ui-g-8 ui-sm-12 ui-fluid">
+                    <label>Nome</label>
+                    <input pInputText type="text" ngModel name="nomePadrinho"
+                      #nomePadrinho="ngModel" required [(ngModel)]="pessoa.padrinho.nome">
+
+                    <app-message-validacao [control]="nomePadrinho" error="required"
+                      text="Informe o nome"></app-message-validacao>
+                  </div>
+                  <div class="ui-g-4 ui-sm-12 ui-fluid">
+                    <label>Telefone</label>
+                    <p-inputMask mask="(99) 99999-9999" ngModel name="telefonePadrinho"
+                      #telefoneMae="ngModel" [(ngModel)]="pessoa.padrinho.telefone">
+                    </p-inputMask>
+                  </div>
+                  <div class="ui-g-2  ui-sm-12 ui-fluid">
+                    <label>Trabalhando?</label>
+
+                    <div class="ui-g">
+                        <div class="ui-g-6">
+                          <p-radioButton name="padrinhoTrabalhando" value="true"
+                            #padrinhoTrabalhando="ngModel" label="Sim"
+                            [(ngModel)]="pessoa.padrinho.trabalhando">
+                          </p-radioButton>
+                        </div>
+                        <div class="ui-g-6">
+                          <p-radioButton name="padrinhoTrabalhando" value="false"
+                            #padrinhoTrabalhando="ngModel" label="Não"
+                            [(ngModel)]="pessoa.padrinho.trabalhando">
+                          </p-radioButton>
+                        </div>
+                      </div>
+                  </div>
+              </div>
+            </p-panel>
+        </div>
+
+        <div class="ui-g-12">
+            <button pButton type="submit" label="Salvar" [disabled]="form.invalid"></button>
+            <button pButton type="button" label="Novo" class="ui-button-info"
+              (click)="novo(form)"></button>
+            <a routerLink="/pessoas">Voltar para a pesquisa</a>
+        </div>
+
+      </div>
+    </form>
+  </div>

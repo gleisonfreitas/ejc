@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="ui-g">
+
+    <div class="ui-12">
+      <h1>EDG</h1>
+    </div>
+
+    <div class="ui-g-12">
+      <button pButton type="button" label="Novo"
+        icon="fa-plus" class="ui-button-secondary"
+        (click)="prepararNovoEdg()">
+      </button>
+    </div>
+
+    <div class="ui-g-12">
+        <p-table [value]="listaEdg" [responsive]="true"
+          [paginator]="true" [rows]="5">
+
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Nome</th>
+              <th>Função</th>
+              <th>Telefone</th>
+              <th class="col-acoes-header"></th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-edg>
+            <tr>
+              <td>{{edg.nome}}</td>
+              <td>{{edg.nomeFuncao}}</td>
+              <td>{{edg.telefone}}</td>
+              <td class="col-acoes">
+                <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                  (click)="confirmarExclusao(edg)"></button>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="4">
+                Nenhuma EDG encontrado
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+</div>
+
+<p-dialog header="Novo EDG" [(visible)]="exibindoDialogEdg" modal="modal">
+
+  <form #frmEdg="ngForm" (ngSubmit)="confirmarEdg(frmEdg)">
+
+    <div class="ui-g-12  ui-sm-12 ui-fluid">
+      <label>Pessoa</label>
+
+      <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+        [filter]="true" [options]="pessoas" required
+        [(ngModel)]="edg.pessoa.codigo"
+        #pessoa="ngModel" name="pessoa">
+      </p-dropdown>
+    </div>
+
+    <div class="ui-g-12  ui-sm-12 ui-fluid">
+      <label>Função</label>
+
+      <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+        [filter]="true" [options]="funcoes" required
+        [(ngModel)]="edg.funcao"
+        #funcao="ngModel" name="funcao">
+      </p-dropdown>
+    </div>
+
+    <div class="ui-g-12">
+      <button pButton type="submit" label="Confirmar" [disabled]="frmEdg.invalid"></button>
+    </div>
+
+  </form>
+
+</p-dialog>

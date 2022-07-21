@@ -1,0 +1,87 @@
+<div class="container">
+    <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+      <div class="ui-g">
+
+        <div class="ui-g-12">
+          <h1>{{editando ? 'Edição de ':'Novo'}} EJC</h1>
+        </div>
+
+        <div class="ui-g-1 ui-sm-12 ui-fluid">
+          <label>Número</label>
+          <input pInputText type="text" ngModel name="numero"
+            #numero="ngModel" required [(ngModel)]="ejc.numero">
+
+          <app-message-validacao [control]="numero" error="required"
+            text="Informe o numero"></app-message-validacao>
+        </div>
+
+        <div class="ui-g-11 ui-sm-12 ui-fluid">
+            <label>Igreja</label>
+            <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+              [filter]="true" [options]="igrejas" required
+              [(ngModel)]="ejc.igreja.codigo"
+              #igreja="ngModel" name="igreja"></p-dropdown>
+
+            <app-message-validacao [control]="igreja" error="required"
+              text="Informe a igreja"></app-message-validacao>
+        </div>
+
+        <div class="ui-g-12 ui-sm-12 ui-fluid">
+          <label>Tema</label>
+          <input pInputText type="text" ngModel name="tema"
+            #tema="ngModel" required [(ngModel)]="ejc.tema">
+
+          <app-message-validacao [control]="tema" error="required"
+            text="Informe o tema"></app-message-validacao>
+        </div>
+
+        <div class="ui-g-12 ui-sm-12 ui-fluid">
+          <label>Colégio</label>
+          <input pInputText type="text" ngModel name="escola"
+            #escola="ngModel" required [(ngModel)]="ejc.escola">
+
+          <app-message-validacao [control]="escola" error="required"
+            text="Informe o escola"></app-message-validacao>
+        </div>
+
+        <div class="ui-g-12 ui-sm-12 ui-fluid">
+          <label>Endereço EJC</label>
+          <input pInputText type="text" ngModel name="enderecoEscola"
+            #enderecoEscola="ngModel" required [(ngModel)]="ejc.enderecoEscola">
+
+          <app-message-validacao [control]="enderecoEscola" error="required"
+            text="Informe o endereco da Escola"></app-message-validacao>
+        </div>
+
+        <div class="ui-g-12 ui-sm-12">
+            <label style="display: block">Período</label>
+            <p-calendar dateFormat="dd/m/yy" ngModel name="inicio"
+              #inicio="ngModel" required [inputStyle]="{ width: '95px' }"
+              [(ngModel)]="ejc.inicio"></p-calendar>
+            <label> à </label>
+            <p-calendar dateFormat="dd/m/yy" ngModel name="fim"
+              #fim="ngModel" required [inputStyle]="{ width: '95px' }"
+              [(ngModel)]="ejc.fim"></p-calendar>
+        </div>
+
+        <div class="ui-g-6 ui-sm-12" *ngIf="ejc.codigo">
+          <p-fileUpload name="file"
+            maxFileSize="100000000"
+            chooseLabel="Anexar Logo"
+            [url]="urlUpload"
+            (onUpload)="onUpload($event)"
+            (onBeforeSend)="antesUpload($event)"
+            (onError)="erroUpload($event)">
+          </p-fileUpload>
+        </div>
+
+        <div class="ui-g-12">
+            <button pButton type="submit" label="Salvar" [disabled]="form.invalid"></button>
+            <button pButton type="button" label="Novo" class="ui-button-info"
+              (click)="novo(form)"></button>
+            <a routerLink="/ejcs">Voltar para a pesquisa</a>
+        </div>
+
+      </div>
+    </form>
+</div>

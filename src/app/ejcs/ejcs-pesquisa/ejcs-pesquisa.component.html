@@ -1,0 +1,75 @@
+<div class="container">
+    <form #form="ngForm" autocomplete="off" (ngSubmit)="pesquisar()">
+      <div class="ui-g">
+
+        <div class="ui-g-12">
+          <h1>Ejc´s</h1>
+        </div>
+
+        <div class="ui-g-6 ui-sm-12 ui-fluid">
+          <label>Igreja</label>
+          <input pInputText type="text" [(ngModel)]="filtro.igreja" name="igreja">
+        </div>
+
+        <div class="ui-g-12">
+          <button pButton type="submit" label="Pesquisar"></button>
+        </div>
+      </div>
+    </form>
+
+    <div class="ui-g">
+        <div class="ui-g-12">
+          <p-table [value]="ejcs" [responsive]="true"
+            [paginator]="true" [rows]="filtro.itensPorPagina"
+            [lazy]="true" [totalRecords]="totalRegistros"
+            (onLazyLoad)="aoMudarPagina($event)"
+            #tabela>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th class="col-num-header">Nº</th>
+                <th>Igreja</th>
+                <th class="col-data-header">Início</th>
+                <th class="col-data-header">Fim</th>
+                <th class="col-valor-header">Ativo</th>
+                <th class="col-acoes-header"></th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-ejc>
+              <tr>
+                <td class="col-num">{{ejc.numero}}</td>
+                <td>{{ejc.igreja}}</td>
+                <td class="col-data">{{ejc.inicio | date: 'dd/MM/yyyy'}}</td>
+                <td class="col-data">{{ejc.fim | date: 'dd/MM/yyyy'}}</td>
+                <td class="col-data">
+                  <a href="javascript:;" [pTooltip]="ejc.ativo ? 'Desativar' : 'Ativar'"
+                    style="text-decoration: none" tooltipPosition="top"
+                    (click)="confirmarAtivarOuDesativa(ejc)">
+                      {{ejc.ativo ? 'Ativo' : 'Inativo'}}
+                  </a>
+                </td>
+                <td class="col-acoes">
+                  <button pButton icon="fa-pencil" pTooltip="Editar"
+                    tooltipPosition="top" [routerLink]="['/ejcs', ejc.codigo]"></button>
+                  <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                    (click)="confirmarExclusao(ejc)"></button>
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="6">
+                  Nenhum EJC encontrado
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <div class="ui-g-12">
+          <a pButton label="Novo EJC" routerLink="/ejcs/novo"></a>
+        </div>
+      </div>
+</div>

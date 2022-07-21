@@ -1,0 +1,55 @@
+<div class="container">
+    <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+      <div class="ui-g">
+
+        <div class="ui-g-12">
+          <h1>{{editando ? 'Edição de ':'Nova'}} Igreja</h1>
+        </div>
+
+        <div class="ui-g-12 ui-sm-12 ui-fluid">
+          <label>Nome</label>
+          <input pInputText type="text" ngModel name="nome"
+          #nome="ngModel" required minlength="5" [(ngModel)]="igreja.nome">
+
+          <app-message-validacao [control]="nome" error="required"
+            text="Informe o nome"></app-message-validacao>
+
+          <app-message-validacao [control]="nome" error="minlength"
+            text=" Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres">
+          </app-message-validacao>
+        </div>
+
+        <div class="ui-g-12 ui-sm-12 ui-fluid">
+          <label>Pastor</label>
+          <input pInputText type="text" ngModel name="pastor"
+            #pastor="ngModel" required minlength="5" [(ngModel)]="igreja.pastor">
+
+          <app-message-validacao [control]="pastor" error="required"
+            text="Informe o pastor"></app-message-validacao>
+
+          <app-message-validacao [control]="pastor" error="minlength"
+            text=" Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres">
+          </app-message-validacao>
+        </div>
+
+        <div class="ui-g-6 ui-sm-12" *ngIf="igreja.codigo">
+          <p-fileUpload name="file"
+            maxFileSize="100000000"
+            chooseLabel="Anexar Logo"
+            [url]="urlUpload"
+            (onUpload)="onUpload($event)"
+            (onBeforeSend)="antesUpload($event)"
+            (onError)="erroUpload($event)">
+          </p-fileUpload>
+        </div>
+
+        <div class="ui-g-12">
+            <button pButton type="submit" label="Salvar" [disabled]="form.invalid"></button>
+            <button pButton type="button" label="Novo" class="ui-button-info"
+              (click)="novo(form)"></button>
+            <a routerLink="/igrejas">Voltar para a pesquisa</a>
+        </div>
+
+      </div>
+    </form>
+</div>

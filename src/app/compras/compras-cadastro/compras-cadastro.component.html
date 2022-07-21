@@ -1,0 +1,62 @@
+<div class="container">
+  <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+    <div class="ui-g">
+
+    <div class="ui-g-12">
+      <h1>{{editando ? 'Edição de ':'Nova'}} Compra</h1>
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-fluid">
+      <label>Descrição</label>
+      <input pInputText type="text" ngModel name="descricao"
+        #descricao="ngModel" required minlength="5" [(ngModel)]="compra.descricao">
+
+      <app-message-validacao [control]="descricao" error="required"
+        text="Informe a descrição"></app-message-validacao>
+
+      <app-message-validacao [control]="descricao" error="minlength"
+        text=" Mínimo de {{ descricao.errors?.minlength?.requiredLength }} caracteres">
+      </app-message-validacao>
+    </div>
+
+    <div class="ui-g-3 ui-sm-12 ui-fluid">
+        <label>Unidade</label>
+        <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+          [filter]="true" [options]="unidades" required
+          [(ngModel)]="compra.unidade"
+          #unidade="ngModel" name="unidade"></p-dropdown>
+    </div>
+
+    <div class="ui-g-3 ui-sm-12 ui-fluid">
+      <label>Quantidade</label>
+      <input pInputText type="text" placeholder="0" currencyMask name="quantidade"
+        [(ngModel)]="compra.quantidade" #quantidade="ngModel" required
+        [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }">
+
+      <app-message-validacao [control]="descricao" error="required"
+      text="Informe a quantidade"></app-message-validacao>
+    </div>
+
+    <div class="ui-g-3 ui-sm-12 ui-fluid">
+      <label>Valor</label>
+      <input pInputText type="text" placeholder="0,00" currencyMask name="valor" ngModel
+        [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+        [(ngModel)]="compra.valor">
+    </div>
+
+    <div class="ui-g-3 ui-sm-12 ui-fluid">
+      <label>Total</label>
+      <input pInputText type="text" placeholder="0,00" currencyMask name="total" ngModel
+        [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+        [(ngModel)]="compra.quantidade * compra.valor" disabled="true">
+    </div>
+
+    <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="form.invalid"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info"
+          (click)="novo(form)"></button>
+        <a routerLink="/compras">Voltar para a pesquisa</a>
+    </div>
+    </div>
+  </form>
+</div>

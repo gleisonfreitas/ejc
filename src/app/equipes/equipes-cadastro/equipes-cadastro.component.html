@@ -1,0 +1,73 @@
+<div class="container">
+
+    <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+      <div class="ui-g">
+
+        <div class="ui-g-12">
+          <h1>{{editando ? 'Edição de ':'Nova'}} Equipe</h1>
+        </div>
+
+        <div class="ui-g-6 ui-sm-12 ui-fluid">
+            <label>Equipe</label>
+            <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+              [filter]="true" [options]="equipes" required
+              [(ngModel)]="equipe.nome"
+              #nome="ngModel" name="nome"></p-dropdown>
+
+        </div>
+
+        <div class="ui-g-6 ui-sm-12 ui-fluid">
+            <label>Coordenador Um</label>
+            <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+              [filter]="true" [options]="pessoas" required
+              [(ngModel)]="equipe.coordenadorUm.codigo"
+              #coordenadorUm="ngModel" name="coordenadorUm"></p-dropdown>
+        </div>
+
+        <div class="ui-g-6 ui-sm-12 ui-fluid">
+          <label>Coordenador Dois</label>
+          <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+            [filter]="true" [options]="pessoas" required
+            [(ngModel)]="equipe.coordenadorDois.codigo"
+            #coordenadorDois="ngModel" name="coordenadorDois"></p-dropdown>
+        </div>
+
+        <div class="ui-g-6 ui-sm-12 ui-fluid">
+            <label>Coordenador Três</label>
+            <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+              [filter]="true" [options]="pessoas"
+              [(ngModel)]="equipe.coordenadorTres.codigo"
+              #coordenadorDois="ngModel" name="coordenadorTres"></p-dropdown>
+        </div>
+
+        <div class="ui-g-12">
+
+          <p-panel header="Montagem da Equipe">
+            <div class="ui-g">
+              <div class="ui-g-12">
+                <p-pickList [target]="equipe.encontreiros" [source]="pessoasDisponiveis"
+                  sourceHeader="Disponíveis" targetHeader="Selecionados" [responsive]="true"
+                  filterBy="nome"  dragdrop="true"
+                  sourceFilterPlaceholder="Pesquisar Encontreiro"
+                  targetFilterPlaceholder="Pesquisar Encontreiro"
+                  [sourceStyle]="{'height':'300px'}" [targetStyle]="{'height':'300px'}">
+                  <ng-template let-pessoa pTemplate="item">
+                    <div class="ui-helper-clearfix">
+                      {{pessoa.nome}}
+                    </div>
+                  </ng-template>
+                </p-pickList>
+              </div>
+            </div>
+          </p-panel>
+      </div>
+      <div class="ui-g-12">
+          <button pButton type="submit" label="Salvar"
+            [disabled]="form.invalid"></button>
+          <button pButton type="button" label="Novo" class="ui-button-info"
+            (click)="novo(form)"></button>
+          <a routerLink="/equipes">Voltar para a pesquisa</a>
+      </div>
+      </div>
+    </form>
+</div>

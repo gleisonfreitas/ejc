@@ -1,0 +1,90 @@
+<div class="container">
+  <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+
+    <div class="ui-g">
+
+      <div class="ui-g-12">
+        <h1>{{editando ? 'Edição de' : 'Novo'}} Usuário</h1>
+      </div>
+
+      <div class="ui-g-6 ui-sm-12 ui-fluid">
+        <label>Nome</label>
+        <input pInputText type="text" ngModel name="nome"
+          #nome="ngModel" required minlength="5" [(ngModel)]="usuario.nome">
+
+        <app-message-validacao [control]="nome" error="required"
+          text="Informe o nome"></app-message-validacao>
+
+        <app-message-validacao [control]="nome" error="minlength"
+          text=" Mínimo de {{ nome.errors?.minlength?.requiredLength }} caracteres">
+        </app-message-validacao>
+
+      </div>
+
+      <div class="ui-g-6 ui-sm-12 ui-fluid">
+        <label>E-mail</label>
+        <div class="ui-inputgroup">
+          <input pInputText type="email" ngModel name="email"
+            #email="ngModel" required [(ngModel)]="usuario.email">
+        </div>
+        <app-message-validacao [control]="email" error="required"
+          text="Informe o email"></app-message-validacao>
+
+      </div>
+
+      <div class="ui-g-6 ui-sm-12 ui-fluid">
+        <label>Senha</label>
+        <input pPassword type="password" name="senha" [(ngModel)]="novasenha"
+        promptLabel="Digite a senha" weakLabel="Fraca" mediumLabel="Media"
+        strongLabel="Forte" #senha="ngModel" minlength="7">
+
+        <app-message-validacao [control]="senha" error="minlength"
+          text=" Mínimo de {{ senha.errors?.minlength?.requiredLength }} caracteres">
+        </app-message-validacao>
+      </div>
+
+      <div class="ui-g-6 ui-sm-12 ui-fluid">
+        <label>Confirmar senha</label>
+        <input pPassword type="password" name="confirmaSenha" [(ngModel)]="confsenha"
+          promptLabel="Digite novamente a senha" weakLabel="Fraca" mediumLabel="Media"
+          strongLabel="Forte" #confirmaSenha="ngModel" minlength="7">
+
+        <app-message-validacao [control]="confirmaSenha" error="minlength"
+          text=" Mínimo de {{ confirmaSenha.errors?.minlength?.requiredLength }} caracteres">
+        </app-message-validacao>
+      </div>
+
+      <div class="ui-g-6 ui-sm-12 ui-fluid">
+        <label>EJC</label>
+
+        <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+          [options]="ejcs" required
+          [(ngModel)]="usuario.ejc.codigo"
+          #ejc="ngModel" name="ejc"></p-dropdown>
+
+        <app-message-validacao [control]="ejc" error="required"
+          text="Informe o EJC"></app-message-validacao>
+      </div>
+
+      <div class="ui-g-12 ui-sm-12">
+        <p-pickList [source]="permissoesDisponiveis" [target]="usuario.permissoes" filterBy="descricao" [responsive]="true"
+        sourceHeader="Permissões Disponíveis" targetHeader="Permissões Concedidas">
+          <ng-template let-permissao pTemplate="item">
+              <div class="ui-helper-clearfix">
+                  <div style="font-size:14px;float:right;margin:15px 5px 0 0">{{permissao.descricao}}</div>
+              </div>
+          </ng-template>
+      </p-pickList>
+      </div>
+
+      <div class="ui-g-12">
+          <button pButton type="submit" label="Salvar" [disabled]="form.invalid"></button>
+          <button pButton type="button" label="Novo" class="ui-button-info"
+           (click)="novo(form)"></button>
+          <a routerLink="/usuarios">Voltar para a pesquisa</a>
+      </div>
+
+    </div>
+
+  </form>
+</div>

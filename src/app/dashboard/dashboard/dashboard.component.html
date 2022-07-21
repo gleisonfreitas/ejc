@@ -1,0 +1,96 @@
+<div class="container">
+  <div class="ui-g">
+    <div class="ui-g-12">
+      <h1>Dashboard</h1>
+    </div>
+
+    <div class="ui-g-12">
+
+      <p-panel header="Quantidade de Encontristas por Círculos">
+        <div class="ui-g">
+
+          <div class="ui-g-6 ui-md-4">
+            <p-table [value]="circulos" [responsive]="true">
+
+              <ng-template pTemplate="header">
+                <tr>
+                <th>Círculo</th>
+                <th class="col-valor-header">Total</th>
+              </tr>
+            </ng-template>
+
+          <ng-template pTemplate="body" let-circulo>
+            <tr>
+              <td>{{circulo.nomeCor}}</td>
+              <td class="col-valor">{{circulo.total}}</td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="footer">
+            <tr>
+              <td>Total</td>
+              <td class="col-valor">{{totalCirculo}}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
+
+      <div class="ui-g-12 ui-md-8">
+        <p-chart type="pie" [data]="pieChartData"></p-chart>
+      </div>
+    </div>
+  </p-panel>
+</div>
+
+  <div class="ui-g-12">
+
+    <p-panel header="Quantidade de Encontreiros por Equipe">
+      <div class="ui-g">
+
+        <div class="ui-g-6 ui-md-4">
+          <p-table [value]="equipes" [responsive]="true">
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Equipe</th>
+                <th class="col-valor-header">Total</th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-equipe>
+              <tr>
+                <td>{{equipe.nomeEquipe}}</td>
+                <td class="col-valor">{{equipe.total}}</td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="footer">
+              <tr>
+                <td>Total</td>
+                <td class="col-valor">{{totalEquipe}}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <div class="ui-g-12 ui-md-8">
+          <p-chart type="bar" [data]="barChartData"></p-chart>
+        </div>
+      </div>
+    </p-panel>
+  </div>
+
+    <div class="ui-g-12 ui-md-6" *ngIf="authService.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+      <p-panel header="Receitas">
+          <p-chart type="line" [data]="lineChartData"></p-chart>
+      </p-panel>
+    </div>
+
+    <div class="ui-g-12 ui-md-6" *ngIf="authService.temPermissao('ROLE_PESQUISAR_LANCAMENTO')">
+      <p-panel header="Receitas X Despesas">
+          <p-chart type="bar" [data]="barChartLancamentoData"></p-chart>
+      </p-panel>
+    </div>
+
+  </div>
+</div>

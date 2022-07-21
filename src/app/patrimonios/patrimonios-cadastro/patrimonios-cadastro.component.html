@@ -1,0 +1,95 @@
+<div class="container">
+  <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+    <div class="ui-g">
+
+    <div class="ui-g-12">
+      <h1>{{editando ? 'Edição de ':'Novo'}} Patrimônio</h1>
+    </div>
+
+    <div class="ui-g-2 ui-sm-12 ui-fluid">
+      <label>Número de Série</label>
+      <p-inputMask mask="aaa-99999" ngModel name="numeroSerie"
+        #numeroSerie="ngModel" [(ngModel)]="patrimonio.numeroSerie">
+      </p-inputMask>
+
+      <app-message-validacao [control]="numeroSerie" error="required"
+        text="Informe o número série "></app-message-validacao>
+    </div>
+
+    <div class="ui-g-10 ui-sm-12 ui-fluid">
+      <label>Descrição</label>
+      <input pInputText type="text" ngModel name="descricao"
+        #descricao="ngModel" required minlength="5" [(ngModel)]="patrimonio.descricao">
+
+      <app-message-validacao [control]="descricao" error="required"
+        text="Informe a descrição"></app-message-validacao>
+
+      <app-message-validacao [control]="descricao" error="minlength"
+        text=" Mínimo de {{ descricao.errors?.minlength?.requiredLength }} caracteres">
+      </app-message-validacao>
+    </div>
+
+    <div class="ui-g-6 ui-sm-12 ui-fluid">
+      <label>Responsável</label>
+      <input pInputText type="text" ngModel name="responsavel"
+        #responsavel="ngModel" required minlength="5" [(ngModel)]="patrimonio.responsavel">
+
+      <app-message-validacao [control]="responsavel" error="required"
+        text="Informe o responsável"></app-message-validacao>
+
+      <app-message-validacao [control]="responsavel" error="minlength"
+        text=" Mínimo de {{ responsavel.errors?.minlength?.requiredLength }} caracteres">
+      </app-message-validacao>
+    </div>
+
+    <div class="ui-g-6 ui-sm-12 ui-fluid">
+      <label>Local de Armazenamento</label>
+      <input pInputText type="text" name="local"
+        [(ngModel)]="patrimonio.local" #local="ngModel">
+
+      <app-message-validacao [control]="local" error="required"
+      text="Informe o local de armazenamento"></app-message-validacao>
+    </div>
+
+    <div class="ui-g-2 ui-sm-12 ui-fluid">
+      <label>Data da Compra</label>
+      <p-calendar dateFormat="dd/m/yy" ngModel name="dataCompra"
+        #dataCompra="ngModel"
+        [(ngModel)]="patrimonio.dataCompra"></p-calendar>
+    </div>
+
+    <div class="ui-g-2 ui-sm-12 ui-fluid">
+      <label>Valor</label>
+      <input pInputText type="text" placeholder="0,00" currencyMask name="valor" ngModel
+        [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+        [(ngModel)]="patrimonio.valor">
+    </div>
+
+    <div class="ui-g-2 ui-sm-12 ui-fluid">
+        <label>Quantidade</label>
+        <input pInputText type="text" placeholder="0" currencyMask name="quantidade"
+          #quantidade="ngModel"
+          [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false, precision: 0 }"
+          [(ngModel)]="patrimonio.quantidade">
+
+        <app-message-validacao [control]="quantidade" error="required"
+          text="Informe a quantidade"></app-message-validacao>
+    </div>
+
+    <div class="ui-g-2 ui-sm-12 ui-fluid">
+        <label>Estado Conservação</label>
+        <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+          [filter]="true" [options]="estadosConservacao" required
+          [(ngModel)]="patrimonio.estado"
+          #estado="ngModel" name="estado"></p-dropdown>
+    </div>
+
+    <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="form.invalid"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info"
+          (click)="novo(form)"></button>
+        <a routerLink="/patrimonios">Voltar para a pesquisa</a>
+    </div>
+    </div>
+  </form>
+</div>

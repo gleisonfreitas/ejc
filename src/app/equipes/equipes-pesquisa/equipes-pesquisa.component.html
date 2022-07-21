@@ -1,0 +1,79 @@
+<div class="container">
+  <form autocomplete="off" (ngSubmit)="pesquisar()">
+    <div class="ui-g">
+
+        <div class="ui-g-12">
+          <h1>Equipes</h1>
+        </div>
+
+        <div class="ui-g-6 ui-sm-12 ui-fluid">
+            <label>Equipe</label>
+            <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+              [filter]="true" [options]="nomesEquipe"
+              [(ngModel)]="filtro.nome" [editable]="true"
+              #nome="ngModel" name="nome"></p-dropdown>
+
+        </div>
+
+        <div class="ui-g-12">
+          <button pButton type="submit" label="Pesquisar"></button>
+        </div>
+    </div>
+  </form>
+
+        <div class="ui-g">
+          <div class="ui-g-12">
+            <p-table [value]="equipes" [responsive]="true"
+            [paginator]="true" [rows]="filtro.itensPorPagina"
+            [lazy]="true" [totalRecords]="totalRegistros"
+            (onLazyLoad)="aoMudarPagina($event)"
+            #tabela>
+
+            <ng-template pTemplate="header">
+              <tr>
+                <th>Nome</th>
+                <th colspan="2">Coordenadores</th>
+                <th class="col-acoes-triplo-header"></th>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-equipe>
+              <tr>
+                <td>{{equipe.nomeEquipe}}</td>
+                <td>{{equipe.coordenadorUm}}</td>
+                <td>{{equipe.coordenadorDois}}</td>
+                <td class="col-acoes-triplo-header">
+                  <button pButton icon="fa-pencil" pTooltip="Editar"
+                    tooltipPosition="top" [routerLink]="['/equipes', equipe.codigo]"></button>
+                  <button pButton icon="fa-trash" pTooltip="Excluir" tooltipPosition="top"
+                    (click)="confirmarExclusao(equipe)"></button>
+                  <button pButton icon="fa-address-book" pTooltip="Agenda" tooltipPosition="top"
+                    (click)="visualizarAgenda(equipe.codigo)"></button>
+                </td>
+              </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+              <tr>
+                <td colspan="5">
+                  Nenhuma equipe encontrada
+                </td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+
+        <div class="ui-g-12">
+          <a pButton label="Nova Equipe" routerLink="/equipes/novo"></a>
+          <button pButton type="button" label="Agenda" class="ui-button-info"
+            (click)="visualizarAgenda(null)" *ngIf="equipes.length"></button>
+          <button pButton type="button" label="Camisas" class="ui-button-info"
+            (click)="visualizarCamisas()" *ngIf="equipes.length"></button>
+          <button pButton type="button" label="Aniversariantes" class="ui-button-info"
+            (click)="visualizarAniversariantes()" *ngIf="equipes.length"></button>
+          <button pButton type="button" label="Crachas" class="ui-button-info"
+            (click)="visualizarCrachas()" *ngIf="equipes.length"></button>
+
+        </div>
+      </div>
+  </div>

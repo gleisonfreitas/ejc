@@ -1,0 +1,56 @@
+<div class="container">
+  <form #form="ngForm" autocomplete="off" (ngSubmit)="salvar(form)">
+    <div class="ui-g">
+
+    <div class="ui-g-12">
+      <h1>{{editando ? 'Edição de ':'Novo'}} Lançamento</h1>
+    </div>
+
+    <div class="ui-g-4 ui-sm-12 ui-fluid">
+      <label>Tipo</label>
+      <p-selectButton [options]="tipos" #tipo name="tipo"
+      [(ngModel)]="lancamento.tipo"></p-selectButton>
+    </div>
+
+    <div class="ui-g-4 ui-sm-12 ui-fluid">
+      <label>Data</label>
+      <p-calendar dateFormat="dd/m/yy" ngModel name="data"
+        #data="ngModel"
+        [(ngModel)]="lancamento.data"></p-calendar>
+    </div>
+
+    <div class="ui-g-4 ui-sm-12 ui-fluid">
+      <label>Valor</label>
+      <input pInputText type="text" placeholder="0,00" currencyMask name="valor" ngModel
+        [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false }"
+        [(ngModel)]="lancamento.valor">
+    </div>
+
+    <div class="ui-g-12 ui-sm-12 ui-fluid">
+      <label>Descrição</label>
+      <input pInputText type="text" ngModel name="descricao"
+        #descricao="ngModel" required minlength="5" [(ngModel)]="lancamento.descricao">
+
+      <app-message-validacao [control]="descricao" error="required"
+        text="Informe a descrição"></app-message-validacao>
+
+      <app-message-validacao [control]="descricao" error="minlength"
+        text=" Mínimo de {{ descricao.errors?.minlength?.requiredLength }} caracteres">
+      </app-message-validacao>
+    </div>
+
+    <div class="ui-g-12 ui-fluid">
+      <label>Observação</label>
+      <textarea pInputTextarea rows="3" name="observacao"
+      [(ngModel)]="lancamento.observacao"></textarea>
+    </div>
+
+    <div class="ui-g-12">
+        <button pButton type="submit" label="Salvar" [disabled]="form.invalid"></button>
+        <button pButton type="button" label="Novo" class="ui-button-info"
+          (click)="novo(form)"></button>
+        <a routerLink="/lancamentos">Voltar para a pesquisa</a>
+    </div>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,97 @@
+<div class="ui-g">
+    <div class="ui-g-12">
+      <button pButton type="button" label="Novo"
+        icon="fa-plus" class="ui-button-secondary"
+        (click)="prepararNovoHistorico()"></button>
+
+    </div>
+    <div class="ui-g-12">
+      <p-table [value]="historicos" [responsive]="true">
+        <ng-template pTemplate="header">
+          <tr>
+            <th>Equipe</th>
+            <th>Qtd</th>
+            <th>Coordenação</th>
+            <th class="col-acoes-header"></th>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="body" let-historico
+          let-rowIndex="rowIndex">
+          <tr>
+            <td>{{historico.nomeEquipe}}</td>
+            <td>{{historico.quantidade}}</td>
+            <td>{{historico.coordenador ? 'Sim' : 'Não' }}</td>
+            <td class="col-acoes">
+              <button pButton icon="fa-pencil" type="button"
+                pTooltip="Editar" tooltipPosition="top"
+                (click)="prepararEdicaoHistorico(historico, rowIndex)"></button>
+
+              <button pButton icon="fa-trash" type="button"
+                pTooltip="Excluir" tooltipPosition="top"
+                (click)="removerHistorico(rowIndex)"></button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage">
+          <tr>
+            <td colspan="4">
+              Nenhum historico cadastrado
+            </td>
+          </tr>
+        </ng-template>
+
+      </p-table>
+    </div>
+  </div>
+
+  <p-dialog [header]="editando ? 'Edição de Historico' : 'Novo Historico'"
+    [(visible)]="exibindoDialogHistorico" styleClass="panel-confimacao"
+    modal="modal" *ngIf="historico">
+
+    <form #frmHistorico="ngForm" (ngSubmit)="confirmarHistorico(frmHistorico)">
+      <div class="ui-g-12 ui-sm-12 ui-fluid">
+        <label>Quantidade</label>
+
+        <input pInputText type="text" name="quantidade"
+          required [(ngModel)]="historico.quantidade" #quantidade="ngModel"
+          placeholder="0" currencyMask
+          [options]="{ prefix: '', thousands: '.', decimal: ',', allowNegative: false, precision: 0  }"/>
+
+        <app-message-validacao [control]="quantidade" error="required"
+          text="Informe a quantidade"></app-message-validacao>
+      </div>
+
+      <div class="ui-g-12  ui-sm-12 ui-fluid">
+        <label>Coordenação</label>
+
+        <div class="ui-g">
+            <div class="ui-g-6">
+              <p-radioButton name="coord" value="true" #coord="ngModel"
+              label="Sim" [(ngModel)]="historico.coordenador"></p-radioButton>
+            </div>
+            <div class="ui-g-6">
+              <p-radioButton name="coord" value="false"  #coord="ngModel"
+              label="Não" [(ngModel)]="historico.coordenador"></p-radioButton>
+            </div>
+          </div>
+      </div>
+
+      <div class="ui-g-12  ui-sm-12 ui-fluid">
+        <label>Equipe</label>
+
+        <p-dropdown placeholder="Selecione..." [autoWidth]="false"
+          [filter]="true" [options]="equipes" required
+          (onChange)="selecionarEquipe()"
+          [(ngModel)]="equipeEnum"
+          #equipe="ngModel" name="equipe"></p-dropdown>
+      </div>
+
+      <div class="ui-g-12">
+        <button pButton type="submit" label="Confirmar" [disabled]="frmHistorico.invalid"></button>
+      </div>
+
+    </form>
+
+  </p-dialog>

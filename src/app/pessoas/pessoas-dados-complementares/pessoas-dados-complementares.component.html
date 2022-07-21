@@ -1,0 +1,82 @@
+<div class="ui-g">
+
+  <div class="ui-g-6 ui-sm-12 ui-fluid">
+    <label>Tamanho Blusa</label>
+    <div class="ui-g">
+      <div class="ui-g-2">
+        <p-radioButton name="blusa" value="P" #sexo="ngModel"
+          label="P" [(ngModel)]="dadosComplementares.tamanhoBlusa">
+        </p-radioButton>
+      </div>
+      <div class="ui-g-2">
+        <p-radioButton name="blusa" value="M" #sexo="ngModel"
+          label="M" [(ngModel)]="dadosComplementares.tamanhoBlusa">
+        </p-radioButton>
+      </div>
+      <div class="ui-g-2">
+        <p-radioButton name="blusa" value="G" #sexo="ngModel"
+          label="G" [(ngModel)]="dadosComplementares.tamanhoBlusa">
+        </p-radioButton>
+      </div>
+      <div class="ui-g-2">
+        <p-radioButton name="blusa" value="GG" #sexo="ngModel"
+          label="GG" [(ngModel)]="dadosComplementares.tamanhoBlusa">
+        </p-radioButton>
+      </div>
+      <div class="ui-g-2">
+        <p-radioButton name="blusa" value="XG" #sexo="ngModel"
+          label="XG" [(ngModel)]="dadosComplementares.tamanhoBlusa">
+        </p-radioButton>
+      </div>
+    </div>
+  </div>
+
+  <div class="ui-g-6 ui-sm-12 ui-fluid">
+    <label>Profissão</label>
+    <input pInputText type="text" ngModel name="profissao"
+      #profissao="ngModel" [(ngModel)]="dadosComplementares.profissao">
+  </div>
+
+  <div class="ui-g-6 ui-sm-12 ui-fluid">
+    <label>Religião</label>
+    <input pInputText type="text" ngModel name="religiao"
+      #religiao="ngModel" [(ngModel)]="dadosComplementares.religiao">
+  </div>
+
+  <div class="ui-g-6 ui-sm-12 ui-fluid">
+    <label>Igreja</label>
+    <input pInputText type="text" ngModel name="igreja"
+      #igreja="ngModel" [(ngModel)]="dadosComplementares.igreja">
+  </div>
+
+  <div class="ui-g-6 ui-sm-12 ui-fluid">
+    <label>Restrição alimentar ?</label>
+    <input pInputText type="text" ngModel name="restricaoAlimentar"
+      #restricaoAlimentar="ngModel" [(ngModel)]="dadosComplementares.restricaoAlimentar">
+  </div>
+
+  <div class="ui-g-6 ui-sm-12 ui-fluid">
+    <label>Utiliza algum medicamento ?</label>
+    <input pInputText type="text" ngModel name="medicamento"
+      #medicamento="ngModel" [(ngModel)]="dadosComplementares.medicamento">
+  </div>
+
+  <div class="ui-g-6 ui-sm-12 ui-fluid">
+    <label>Tem alguma alergia ?</label>
+    <input pInputText type="text" ngModel name="alergia"
+      #alergia="ngModel" [(ngModel)]="dadosComplementares.alergia">
+  </div>
+
+  <div class="ui-g-6 ui-sm-12 ui-fluid">
+    <label>Tem condução ?</label>
+    <input pInputText type="text" ngModel name="conducao"
+      #conducao="ngModel" [(ngModel)]="dadosComplementares.conducao">
+  </div>
+
+  <div class="ui-g-6 ui-sm-12 ui-fluid">
+    <label>Toca algum instrumento ?</label>
+    <input pInputText type="text" ngModel name="instrumento"
+      #instrumento="ngModel" [(ngModel)]="dadosComplementares.instrumento">
+  </div>
+
+</div>
